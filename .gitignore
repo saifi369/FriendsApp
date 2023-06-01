@@ -1,0 +1,33 @@
+.gradle
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+local.properties
+# Generated files
+/build
+*.apk
+*.aab
+output.json
+
+# local configuration files (sdk path, etc)
+/local.properties
+
+#Gradle generated files
+/.gradle/
+
+# Android Studio
+*.iml
+/.idea/
+
+# MAC_OS specific files
+.DS_Store
+
+# Android studio captures folder. This is where profiling captures are saved.
+/captures
+
+# Misc
+.externalNativeBuild
+.cxx
