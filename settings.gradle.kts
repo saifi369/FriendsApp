@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "FriendsApp"
-include ':app'
+include (":app")
