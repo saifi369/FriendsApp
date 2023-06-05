@@ -28,7 +28,8 @@ jobs:
           alias: ${{ secrets.KEYSTORE_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
-      - run: echo "Build status report=${{ job.status }}."
+      - name: Build status report
+        run: echo "Build status report=${{ job.status }}."
       - name: Upload App Bundle
         uses: actions/upload-artifact@v1
         with:
