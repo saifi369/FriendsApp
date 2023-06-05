@@ -20,6 +20,17 @@ android {
         }
     }
 
+    //this signing configs are using local machine's env variables
+    //no need to use when generating bundle with CI
+//    signingConfigs {
+//        create("release"){
+//            storeFile = file(System.getenv("HOME")+"/Developer/keystores/friendsapp/keystore")
+//            storePassword = System.getenv("FRIENDS_KEYSTORE_PASSWORD")
+//            keyAlias = System.getenv("FRIENDS_KEY_ALIAS")
+//            keyPassword = System.getenv("FRIENDS_ALIAS_PASSWORD")
+//        }
+//    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -27,6 +38,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            //need to add if using local singing configs
+//            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -42,7 +55,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.2"
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
