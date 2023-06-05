@@ -33,7 +33,6 @@ jobs:
           alias: ${{ secrets.KEYSTORE_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
-
       - name: Echo Build Status
         run: echo "Build status report=${{ job.status }}."
 
