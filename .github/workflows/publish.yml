@@ -96,7 +96,7 @@ jobs:
         with:
           java-version: '17'
 
-      -name: App Version Bump
+      - name: App Version Bump
         uses: chkfung/android-version-actions@v1.1
         with:
           gradlePath: app/build.gradle
