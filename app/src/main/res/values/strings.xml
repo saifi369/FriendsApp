@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FriendsApp</string>
+    <string name="emailHint">Enter email...</string>
+    <string name="passwordHint">Enter password</string>
+    <string name="submitButtonText">Submit</string>
+    <string name="timeline">Timeline</string>
 </resources>
