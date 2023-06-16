@@ -43,6 +43,9 @@ import com.u4universe.friendsapp.R
 )
 fun SignUpScreen() {
 
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,8 +56,6 @@ fun SignUpScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
 
         EmailField(email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
@@ -85,31 +86,43 @@ private fun EmailField(
 private fun PasswordField(
     password: String, onValueChange: (String) -> Unit
 ) {
-    var isVisible by remember {
-        mutableStateOf(false)
+    var isVisible by remember { mutableStateOf(false) }
+    val visualTransformation = if (isVisible) {
+        VisualTransformation.None
+    } else {
+        PasswordVisualTransformation()
     }
+
     TextField(
         modifier = Modifier
             .fillMaxWidth()
             .testTag(stringResource(id = R.string.passwordHint)),
         trailingIcon = {
-            IconButton(onClick = {
-                isVisible = !isVisible
-            }) {
-                Icon(
-                    imageVector = if (isVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                    contentDescription = stringResource(id = R.string.toggleVisibility)
-                )
-            }
+            TrailingIcon(
+                isVisible = isVisible
+            ) { isVisible = !isVisible }
         },
-        visualTransformation = if (isVisible) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        }, value = password, label = {
+        visualTransformation = visualTransformation,
+        value = password,
+        label = {
             Text(text = stringResource(id = R.string.passwordHint))
-        }, onValueChange = onValueChange
+        },
+        onValueChange = onValueChange
     )
+}
+
+@Composable
+private fun TrailingIcon(
+    isVisible: Boolean,
+    onToggle: () -> Unit
+) {
+    IconButton(onClick = onToggle) {
+        val visibilityRes = if (isVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+        Icon(
+            imageVector = visibilityRes,
+            contentDescription = stringResource(id = R.string.toggleVisibility)
+        )
+    }
 }
 
 @Composable
