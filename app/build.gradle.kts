@@ -57,8 +57,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    testOptions.unitTests.all {
-        it.testLogging {
+    tasks.withType<Test> {
+        useJUnitPlatform()
+        testLogging {
             events("passed", "failed", "skipped", "standardOut", "standardError")
         }
     }
@@ -78,7 +79,9 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended:1.4.3")
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
