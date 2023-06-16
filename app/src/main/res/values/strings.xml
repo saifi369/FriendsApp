@@ -5,4 +5,5 @@
     <string name="submitButtonText">Submit</string>
     <string name="timeline">Timeline</string>
     <string name="signUpScreenTitle">Sign Up</string>
+    <string name="toggleVisibility">Toggle Visibility</string>
 </resources>

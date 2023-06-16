@@ -1,21 +1,33 @@
 package com.u4universe.friendsapp.signup
 
 import android.content.res.Configuration
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.u4universe.friendsapp.R
@@ -24,7 +36,9 @@ import com.u4universe.friendsapp.R
 @Composable
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
-    device = "id:pixel_6", showBackground = true, showSystemUi = true
+    device = "id:pixel_6",
+    showBackground = true,
+    showSystemUi = true
 )
 fun SignUpScreen() {
 
@@ -34,34 +48,16 @@ fun SignUpScreen() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(
-                id = R.string.signUpScreenTitle
-            ),
-            style = typography.headlineMedium
-        )
+        ScreenTitle(R.string.signUpScreenTitle)
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = "",
-            label = {
-                Text(text = stringResource(id = R.string.emailHint))
-            },
-            onValueChange = {}
-        )
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
 
+        EmailField(email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
-
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = "",
-            label = {
-                Text(text = stringResource(id = R.string.passwordHint))
-            },
-            onValueChange = {}
-        )
+        PasswordField(password = password, onValueChange = { password = it })
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -69,4 +65,52 @@ fun SignUpScreen() {
             Text(text = stringResource(id = R.string.submitButtonText))
         }
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun EmailField(
+    email: String, onValueChange: (String) -> Unit
+) {
+    TextField(
+        modifier = Modifier.fillMaxWidth(), value = email, label = {
+            Text(text = stringResource(id = R.string.emailHint))
+        }, onValueChange = onValueChange
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun PasswordField(
+    password: String, onValueChange: (String) -> Unit
+) {
+    var isVisible by remember {
+        mutableStateOf(false)
+    }
+    TextField(
+        modifier = Modifier.fillMaxWidth(), trailingIcon = {
+            IconButton(onClick = {
+                isVisible = !isVisible
+            }) {
+                Icon(
+                    imageVector = if (isVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                    contentDescription = stringResource(id = R.string.toggleVisibility)
+                )
+            }
+        },
+        visualTransformation = if (isVisible) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        }, value = password, label = {
+            Text(text = stringResource(id = R.string.passwordHint))
+        }, onValueChange = onValueChange
+    )
+}
+
+@Composable
+private fun ScreenTitle(@StringRes screenTitle: Int) {
+    Text(
+        text = stringResource(id = screenTitle), style = typography.headlineMedium
+    )
 }
